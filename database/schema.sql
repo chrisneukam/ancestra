@@ -1,16 +1,51 @@
 PRAGMA foreign_keys = ON;
 
-------------------------------------------------------------
+--------------------------------------------------------------------
+-- ANCESTRA SCHEMA V1
+--
+-- Core Principle:
+--
+-- The database stores genealogy facts, not views.
+--
+-- The database stores a genealogy graph consisting of:
+--   - Persons
+--   - Family Units
+--   - Relationships
+--   - Events
+--   - Sources
+--   - Places
+--
+-- The database does NOT store:
+--   - Family Trees
+--   - Ancestor Trees
+--   - Descendant Trees
+--   - Family Cards
+--   - Reports
+--   - Generated Layouts
+--   - Kekulé Numbers
+--
+-- Kekulé numbers are dynamically calculated by the
+-- Genealogy Engine based on:
+--
+--   - Root Person
+--   - Current Genealogy Graph
+--
+-- Root Person selection belongs to Project Configuration
+-- and is not stored in the database.
+--
+-- Facts are stored.
+-- Views are generated.
+--
+--------------------------------------------------------------------
+
+--------------------------------------------------------------------
 -- PERSON
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE person (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
 
-    -- Optional genealogical identifier
-    kekule_number       INTEGER UNIQUE,
-
-    -- Display name used by the UI
+    -- Display name used by the user interface
     preferred_surname   TEXT,
     preferred_given     TEXT,
 
@@ -30,23 +65,18 @@ CREATE TABLE person (
     updated_at          TEXT NOT NULL
 );
 
-CREATE UNIQUE INDEX idx_person_kekule
-ON person(kekule_number)
-WHERE kekule_number IS NOT NULL;
-
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- PERSON NAMES
-------------------------------------------------------------
+--------------------------------------------------------------------
 --
--- Application rule:
+-- Application Rule:
 --
 -- person.preferred_surname
 -- person.preferred_given
 --
--- must always match the person_name row where
--- is_preferred = 1
+-- should match the PersonName entry marked as preferred.
 --
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE person_name (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,9 +98,17 @@ CREATE TABLE person_name (
 CREATE INDEX idx_person_name_person
 ON person_name(person_id);
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- FAMILY
-------------------------------------------------------------
+--------------------------------------------------------------------
+--
+-- A family represents a family unit.
+--
+-- It does not represent a tree branch.
+--
+-- Family relationships form part of the genealogy graph.
+--
+--------------------------------------------------------------------
 
 CREATE TABLE family (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,11 +117,11 @@ CREATE TABLE family (
     updated_at          TEXT NOT NULL
 );
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- FAMILY MEMBERS
-------------------------------------------------------------
+--------------------------------------------------------------------
 --
--- Valid roles:
+-- Supported roles:
 --
 -- FATHER
 -- MOTHER
@@ -91,7 +129,7 @@ CREATE TABLE family (
 -- PARTNER
 -- UNKNOWN
 --
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE family_member (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -117,15 +155,25 @@ CREATE INDEX idx_family_member_person
 ON family_member(person_id);
 
 CREATE UNIQUE INDEX idx_family_member_unique
-ON family_member(
+ON family_member (
     family_id,
     person_id,
     role
 );
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- FAMILY CHILDREN
-------------------------------------------------------------
+--------------------------------------------------------------------
+--
+-- Parent-child relationships are established through:
+--
+-- Family
+-- FamilyMember
+-- FamilyChild
+--
+-- These relationships form the genealogy graph.
+--
+--------------------------------------------------------------------
 
 CREATE TABLE family_child (
     family_id           INTEGER NOT NULL,
@@ -148,9 +196,9 @@ CREATE TABLE family_child (
 CREATE INDEX idx_family_child_child
 ON family_child(child_id);
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- PLACES
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE place (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -171,9 +219,9 @@ CREATE TABLE place (
 CREATE INDEX idx_place_parent
 ON place(parent_place_id);
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- EVENTS
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE event (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -199,11 +247,11 @@ ON event(event_type);
 CREATE INDEX idx_event_place
 ON event(place_id);
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- EVENT PARTICIPANTS
-------------------------------------------------------------
+--------------------------------------------------------------------
 --
--- Examples:
+-- Example roles:
 --
 -- CHILD
 -- FATHER
@@ -214,7 +262,7 @@ ON event(place_id);
 -- GODPARENT
 -- OFFICIANT
 --
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE event_participant (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -260,9 +308,9 @@ ON event_participant(person_id);
 CREATE INDEX idx_event_participant_family
 ON event_participant(family_id);
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- SOURCES
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE source (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -270,7 +318,6 @@ CREATE TABLE source (
     title               TEXT NOT NULL,
 
     repository          TEXT,
-
     reference           TEXT,
 
     description         TEXT,
@@ -279,9 +326,17 @@ CREATE TABLE source (
     updated_at          TEXT NOT NULL
 );
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- MEDIA
-------------------------------------------------------------
+--------------------------------------------------------------------
+--
+-- Binary data is NOT stored in SQLite.
+--
+-- Files are stored in the project media directory.
+--
+-- SQLite stores metadata only.
+--
+--------------------------------------------------------------------
 
 CREATE TABLE media (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -305,9 +360,9 @@ CREATE UNIQUE INDEX idx_media_checksum
 ON media(checksum)
 WHERE checksum IS NOT NULL;
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- NOTES
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE note (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -320,18 +375,16 @@ CREATE TABLE note (
     updated_at          TEXT NOT NULL
 );
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 -- GENERIC LINKS
-------------------------------------------------------------
---
--- IMPORTANT:
+--------------------------------------------------------------------
 --
 -- SQLite cannot enforce referential integrity for
--- entity_type/entity_id pairs.
+-- polymorphic entity references.
 --
 -- Validation is handled by the application layer.
 --
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE source_link (
     source_id           INTEGER NOT NULL,
@@ -353,7 +406,7 @@ CREATE TABLE source_link (
 CREATE INDEX idx_source_link_entity
 ON source_link(entity_type, entity_id);
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE media_link (
     media_id            INTEGER NOT NULL,
@@ -375,7 +428,7 @@ CREATE TABLE media_link (
 CREATE INDEX idx_media_link_entity
 ON media_link(entity_type, entity_id);
 
-------------------------------------------------------------
+--------------------------------------------------------------------
 
 CREATE TABLE note_link (
     note_id             INTEGER NOT NULL,
@@ -396,3 +449,32 @@ CREATE TABLE note_link (
 
 CREATE INDEX idx_note_link_entity
 ON note_link(entity_type, entity_id);
+
+--------------------------------------------------------------------
+-- END OF SCHEMA
+--------------------------------------------------------------------
+--
+-- Architectural Reminder
+--
+-- Facts are stored.
+-- Views are generated.
+--
+-- Persisted:
+--   Persons
+--   Families
+--   Relationships
+--   Events
+--   Sources
+--   Places
+--   Notes
+--   Media Metadata
+--
+-- Computed:
+--   Root-based Views
+--   Ancestor Trees
+--   Descendant Trees
+--   Family Trees
+--   Relationship Paths
+--   Kekulé Numbers
+--
+--------------------------------------------------------------------

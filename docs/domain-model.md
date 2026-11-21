@@ -1,259 +1,495 @@
-# Ahnenforschung Desktop-Anwendung
+# Ancestra
 
 # Domain Model v1.0
 
-## Dokumentenzweck
+## Purpose
 
-Dieses Dokument beschreibt das fachliche Datenmodell der Ahnenforschungsanwendung.
+This document defines the business domain model of Ancestra.
 
-Es dient als Referenz für:
+It serves as the authoritative reference for:
 
-- Architekturentscheidungen
-- SQLite-Datenbankmodell
-- Rust-Domänenmodell
-- GitHub Copilot Kontext
-- zukünftige Erweiterungen
-- GEDCOM-Kompatibilität
+- Architecture decisions
+- SQLite schema design
+- Rust domain models
+- TypeScript frontend models
+- GitHub Copilot context
+- Future feature development
+- GEDCOM interoperability
 
-Die Datenbank ist die einzige Quelle der Wahrheit (Single Source of Truth).
-
-PDF-Stammkarten werden nicht gespeichert, sondern jederzeit aus dem Datenbestand erzeugt.
-
----
-
-# Projektziele
-
-## Fachliche Ziele
-
-- korrekte genealogische Datenhaltung
-- Unterstützung klassischer Familienstammkarten
-- Speicherung unvollständiger Informationen
-- Nachvollziehbarkeit der Forschung
-- langfristige Erweiterbarkeit
-
-## Technische Ziele
-
-- SQLite als lokale Datenspeicherung
-- Rust als Backend
-- Tauri Desktop-Anwendung
-- moderne GUI mit hoher Bediengeschwindigkeit
-- spätere GEDCOM-Kompatibilität
+The domain model describes the business concepts of the application and is intentionally independent from implementation details wherever possible.
 
 ---
 
-# Grundprinzipien
+# Vision
 
-## Personen existieren genau einmal
+Ancestra is a modern, project-based genealogy application designed for researching, organizing, and exploring family history.
 
-Jede reale Person darf nur einmal in der Datenbank existieren.
+Ancestra is not a database application.
 
-Dies gilt unabhängig davon, in welchen Stammkarten sie erscheint.
+Users work with genealogy projects rather than database files.
 
-Eine Person kann gleichzeitig:
+The application combines traditional genealogy workflows with a modern desktop experience, high-performance local data storage, and a flexible graph-based genealogy model.
 
-- Kind einer Familie sein
-- Elternteil einer Familie sein
-- Partner einer Familie sein
-- Mitglied mehrerer Familien sein
-- auf mehreren Stammkarten erscheinen
-
-Alle Referenzen verweisen auf denselben Personendatensatz.
+The underlying database is considered an implementation detail and remains hidden from the user.
 
 ---
 
-## Familienstammkarten sind Ansichten
+# Core Principles
 
-Eine Familienstammkarte ist keine eigene Datenbankentität.
+## Facts Are Stored, Views Are Generated
 
-Sie ist eine Darstellung von:
+The genealogy database stores factual genealogy information.
 
-- Personen
-- Familien
-- Kindern
-- Ereignissen
-- Orten
-- Quellen
-- Medien
-- Notizen
+Examples:
 
-Die Datenbank speichert ausschließlich die fachlichen Daten.
+- Persons
+- Families
+- Relationships
+- Events
+- Places
+- Sources
+- Media references
+- Notes
 
-Stammkarten werden daraus generiert.
+The application does not persist generated views.
 
----
+Examples:
 
-## Unvollständige Informationen sind normal
+- Family trees
+- Ancestor trees
+- Descendant trees
+- Relationship paths
+- Family cards
+- Reports
+- Printed views
+- Exports
+- Kekulé numbers
 
-Genealogische Informationen sind häufig unvollständig.
-
-Deshalb sind grundsätzlich alle fachlichen Felder optional.
-
-Beispiele:
-
-- Geburtsdatum unbekannt
-- Eltern unbekannt
-- Sterbedatum unbekannt
-- Ort unbekannt
-- Quelle unbekannt
-
-Das Fehlen von Informationen darf die Erfassung nicht verhindern.
+Generated views can always be recreated from stored genealogy facts.
 
 ---
 
-# Kekulé-Nummern
+## Single Source of Truth
 
-## Bedeutung
+The genealogy database is the single source of truth for genealogy information.
 
-Die Kekulé-Nummer beschreibt die genealogische Position einer Person innerhalb einer definierten Ahnenlinie.
+Generated artifacts must never become authoritative data sources.
 
----
-
-## Eigenschaften
-
-- eindeutig
-- optional
-- nicht Primärschlüssel
-- kann nachträglich vergeben werden
+Any report, family card, export, or visualization must be reproducible from the genealogy graph stored in the database.
 
 ---
 
-## Personen ohne Kekulé-Nummer
+## One Real Person = One Record
 
-Folgende Personen können keine Kekulé-Nummer besitzen:
+Each real person must exist exactly once within a project.
 
-- noch nicht eingeordnete Personen
-- vermutete Personen
-- angeheiratete Personen
-- Seitenlinien
-- Geschwister angeheirateter Personen
-- Forschungsobjekte außerhalb der Hauptlinie
+A single person may simultaneously act as:
 
----
+- Child
+- Parent
+- Partner
+- Ancestor
+- Descendant
+- Family member in multiple family units
 
-## Wurzelperson
+All references must point to the same person record.
 
-Die Bedeutung einer Kekulé-Nummer ergibt sich immer aus einer definierten Wurzelperson.
-
-Die Anwendung muss sicherstellen, dass gespeicherte Kekulé-Nummern zur gewählten Ahnenlinie konsistent bleiben.
+Duplicate records are considered a data quality problem and should be actively prevented.
 
 ---
 
-# Benutzeroberfläche
+## Incomplete Information Is Normal
 
-## Grundsatz
+Genealogical research is often incomplete.
 
-Die Benutzeroberfläche wird für schnelle Datenerfassung optimiert.
+Ancestra must support:
 
-Das interne Datenmodell darf komplexer sein als die sichtbare Eingabemaske.
+- Unknown parents
+- Unknown birth dates
+- Unknown death dates
+- Unknown locations
+- Missing sources
+- Unverified assumptions
+- Partial family structures
 
----
-
-## Eingabeprinzipien
-
-Ziel der GUI:
-
-- möglichst wenige Klicks
-- möglichst wenige Dialoge
-- möglichst wenige Feldwechsel
-- schnelle Datenerfassung
-
-Die GUI orientiert sich an bestehenden Familienstammkarten.
+Missing information must never prevent data entry.
 
 ---
 
-## Namen
+## Local-First Ownership
 
-Im Standardfall werden lediglich erfasst:
+All genealogy information belongs to the user.
 
-- Nachname
-- Vorname(n)
+Projects are stored locally.
 
-Dies ermöglicht eine schnelle Eingabe.
-
-Zusätzliche Namen werden nur bei Bedarf gepflegt.
+The architecture assumes local ownership of genealogy data and does not require cloud services or online accounts.
 
 ---
 
-# Kernentitäten
+# Genealogy Graph
 
-# Person
+## Fundamental Concept
 
-Zentrale Entität des gesamten Systems.
+The genealogy database stores a genealogy graph.
 
-Attribute:
+The database does not store family trees.
 
-- technische ID
-- optionale Kekulé-Nummer
-- bevorzugter Vorname
-- bevorzugter Nachname
-- Geschlecht
-- Forschungsstatus
-- Änderungsinformationen
+The graph consists of:
 
-Eine Person kann besitzen:
+- Persons
+- Family units
+- Parent-child relationships
+- Partner relationships
 
-- weitere Namen
-- Ereignisse
-- Quellen
-- Medien
-- Notizen
+All genealogy views are derived from this graph.
 
 ---
 
-## Forschungsstatus
+## Why a Graph Instead of Stored Trees
 
-Personen können unterschiedliche Bearbeitungsstände besitzen.
+Family trees are representations of relationships.
 
-Mögliche Werte:
+Relationships are facts.
+
+Trees are views.
+
+Storing trees would introduce redundant information and create consistency problems whenever relationships change.
+
+The genealogy graph remains the only authoritative representation of family relationships.
+
+---
+
+## Generated Views
+
+The following are generated from the graph:
+
+- Ancestor trees
+- Descendant trees
+- Family trees
+- Family cards
+- Relationship paths
+- Reports
+- Print layouts
+
+Generated views are not domain entities.
+
+Generated views are never stored in the genealogy database.
+
+---
+
+## Dynamic Root Person
+
+Any person in the genealogy graph may become the root person of a generated view.
+
+Examples:
+
+- A researcher viewing their own ancestry
+- A child used as the root person
+- A spouse used as the root person
+- A historical ancestor used as the root person
+
+Changing the root person must never modify genealogy data.
+
+The root person is configuration, not genealogy data.
+
+---
+
+# Kekulé Numbering
+
+## Purpose
+
+Kekulé numbering is a standardized numbering system used to uniquely identify ancestors within an ancestor view.
+
+---
+
+## Computed Value
+
+A Kekulé number is a computed value.
+
+A Kekulé number is not a property of a person.
+
+Its value depends on:
+
+- The selected root person
+- The current genealogy graph
+- The generated ancestor tree
+
+---
+
+## Persistence Rule
+
+Kekulé numbers must never be stored in the genealogy database.
+
+The genealogy engine calculates them whenever required.
+
+---
+
+## Consequences
+
+Changing the selected root person automatically changes the resulting Kekulé numbering.
+
+No database updates are required.
+
+No genealogy records are modified.
+
+No renumbering process exists.
+
+---
+
+# Project Model
+
+## Project-Based Application
+
+Ancestra is a project-based application.
+
+Users interact with projects rather than databases.
+
+The project serves as the primary entry point of the application.
+
+---
+
+## Project File
+
+Each project is represented by a dedicated project file.
+
+Example:
+
+```text
+MyFamily.ancestra
+```
+
+The project file references all resources required by the project.
+
+The project file is not part of the genealogy database.
+
+---
+
+## Responsibilities of the Project File
+
+The project file stores project-specific configuration.
+
+Examples:
+
+- Project name
+- Database location
+- Media locations
+- Export locations
+- Preferred root person
+- Project metadata
+
+---
+
+## Example Project Structure
+
+```text
+MyFamily/
+│
+├── MyFamily.ancestra
+│
+├── database/
+│   └── ancestra.db
+│
+├── media/
+│   ├── photos/
+│   ├── certificates/
+│   └── documents/
+│
+├── exports/
+│
+└── backups/
+```
+
+---
+
+## Example Project Configuration
+
+```json
+{
+  "projectVersion": 1,
+  "projectName": "My Family",
+  "database": "./database/ancestra.db",
+  "mediaDirectory": "./media",
+  "exportDirectory": "./exports",
+  "preferredRootPersonId": 42
+}
+```
+
+---
+
+# Separation of Responsibilities
+
+## Application Settings
+
+Application settings are user-specific.
+
+Examples:
+
+- Language
+- Theme
+- Window layout
+- User preferences
+- Recently opened projects
+
+Application settings exist independently of any project.
+
+---
+
+## Project Configuration
+
+Project configuration belongs to a specific genealogy project.
+
+Examples:
+
+- Project metadata
+- Preferred root person
+- Project directories
+- View defaults
+
+Project configuration is stored in the project file.
+
+---
+
+## Genealogy Data
+
+Genealogy data consists exclusively of factual research information.
+
+Examples:
+
+- Persons
+- Families
+- Events
+- Places
+- Sources
+- Notes
+- Media metadata
+
+Genealogy data is stored in the SQLite database.
+
+---
+
+## Generated Views
+
+Generated views are produced by the genealogy engine.
+
+Examples:
+
+- Ancestor views
+- Descendant views
+- Family trees
+- Family cards
+- Relationship reports
+- Kekulé numbering
+
+Generated views are never persisted as genealogy data.
+
+---
+
+## Architectural Rule
+
+The following separation is mandatory:
+
+```text
+Application Settings
+        ↓
+Project Configuration
+        ↓
+Genealogy Database
+        ↓
+Genealogy Engine
+        ↓
+Generated Views
+```
+
+Project configuration must never be stored in the genealogy database.
+
+Generated views must never be stored in the genealogy database.
+
+---
+
+# Core Entities
+
+## Person
+
+The Person entity is the central entity of the entire system.
+
+A person represents a real human being.
+
+### Attributes
+
+Examples:
+
+- Technical identifier
+- Preferred given name
+- Preferred surname
+- Sex
+- Research status
+- Audit information
+
+### Relationships
+
+A person may be connected to:
+
+- Alternative names
+- Events
+- Sources
+- Media
+- Notes
+- Families
+
+### Research Status
+
+The following research states are supported:
 
 - CONFIRMED
 - ASSUMED
 - UNVERIFIED
 - PLACEHOLDER
 
-Der Forschungsstatus dient ausschließlich der Forschung.
+The research status exists solely for research purposes.
 
-Er beeinflusst keine genealogischen Berechnungen.
+It must never influence genealogical calculations.
 
 ---
 
-# PersonName
+## PersonName
 
-Speichert alternative Namensformen.
+PersonName stores alternative name representations.
 
-Beispiele:
+Examples:
 
-- Geburtsname
+- Birth name
+- Married name
 - Alias
-- Spitzname
-- Rufname
-- historische Schreibweise
+- Nickname
+- Historical spelling
+- Preferred name
 
-Die GUI verwendet standardmäßig den bevorzugten Namen.
+The user interface normally displays the preferred name.
 
 ---
 
-# Familienmodell
+# Family Model
 
 ## Family
 
-Eine Familie beschreibt einen genealogischen Familienverbund.
+A family represents a family unit.
 
-Eine Familie repräsentiert:
+A family may describe:
 
-- gemeinsame Elternschaft
-- gemeinsame Kinder
-- gemeinsame Ereignisse
+- Parent-child relationships
+- Partnerships
+- Shared children
+- Shared family events
 
-Eine Heirat ist hierfür nicht notwendig.
+Marriage is not required.
 
 ---
 
 ## FamilyMember
 
-Verknüpft Personen mit einer Familie.
+FamilyMember connects persons to a family.
 
-Rollenbeispiele:
+Examples of roles:
 
 - FATHER
 - MOTHER
@@ -261,216 +497,211 @@ Rollenbeispiele:
 - PARTNER
 - UNKNOWN
 
-Dieses Modell erlaubt:
-
-- unvollständige Familien
-- unbekannte Elternteile
-- zukünftige Erweiterungen
+The model intentionally supports incomplete information.
 
 ---
 
 ## FamilyChild
 
-Verknüpft Kinder mit einem Familienverbund.
+FamilyChild connects children to a family unit.
 
-Hieraus ergeben sich:
+These relationships form the basis for:
 
-- Abstammungslinien
-- Ahnenberechnungen
-- Vorfahren
-- Nachfahren
+- Parent-child navigation
+- Ancestor calculations
+- Descendant calculations
+- Relationship calculations
+- Graph traversal
 
-Eltern-Kind-Beziehungen werden nicht redundant gespeichert.
+Parent-child relationships are not stored redundantly elsewhere.
 
 ---
 
-# Orte
+# Places
 
 ## Place
 
-Speichert Ortsinformationen zentral.
+A Place stores location information.
 
-Vorteile:
+Benefits:
 
-- Vermeidung von Dubletten
-- bessere Suche
-- geografische Auswertungen
-- spätere Kartendarstellungen
-
----
-
-## Ortshierarchie
-
-Orte können hierarchisch organisiert werden.
-
-Beispiel:
-
-Deutschland
-└── Sachsen
-└── Grimma
-
-Die Hierarchie dient der Organisation.
-
-Sie stellt ausdrücklich keine historisch verbindliche politische Zuordnung dar.
+- Reduced duplication
+- Better searchability
+- Geographic grouping
+- Future map integration
 
 ---
 
-# Ereignismodell
+## Place Hierarchy
 
-## Grundprinzip
+Places may be organized hierarchically.
 
-Historische Informationen werden als Ereignisse gespeichert.
+Example:
 
-Das Ereignismodell ist generisch aufgebaut.
+```text
+Germany
+└── Bavaria
+    └── Neunkirchen
+```
 
-Neue Ereignistypen können hinzugefügt werden, ohne das Datenbankschema zu ändern.
+The hierarchy is organizational only.
+
+It does not represent legally or historically authoritative political structures.
 
 ---
 
-## Ereignistypen
+# Event Model
 
-Beispiele:
+## General Principle
 
-- Geburt
-- Taufe
-- Konfirmation
-- Heirat
-- Scheidung
-- Tod
-- Bestattung
-- Beruf
-- Wohnort
-- Militärdienst
+Historical facts are represented as events.
+
+The event model is intentionally generic.
+
+New event types may be introduced without requiring schema changes.
+
+---
+
+## Example Event Types
+
+- Birth
+- Baptism
+- Confirmation
+- Marriage
+- Divorce
+- Death
+- Burial
+- Occupation
+- Residence
+- Military Service
 
 ---
 
 ## Event
 
-Ein Ereignis beschreibt einen historischen Sachverhalt.
+An event represents a historical occurrence.
 
-Ein Ereignis besitzt typischerweise:
+Typical properties include:
 
-- Typ
-- Datum
-- Ort
-- Beschreibung
+- Event type
+- Date
+- Place
+- Description
 
 ---
 
 ## EventParticipant
 
-Teilnehmer werden über Rollen mit einem Ereignis verknüpft.
+Persons and families participate in events through explicitly defined roles.
 
-Beispiele:
+Examples:
 
-Geburt:
+### Birth
 
-- Kind
-- Vater
-- Mutter
+- Child
+- Father
+- Mother
 
-Taufe:
+### Baptism
 
-- Täufling
-- Pate
-- Pfarrer
+- Baptized Person
+- Godparent
+- Officiant
 
-Heirat:
+### Marriage
 
-- Ehepartner A
-- Ehepartner B
+- Spouse A
+- Spouse B
 
-Tod:
+### Death
 
-- Verstorbener
+- Deceased Person
 
-Dieses Modell entspricht modernen genealogischen Systemen und bietet eine hohe Erweiterbarkeit.
-
----
-
-## Datumsangaben
-
-Genealogische Datumsangaben sind häufig unscharf.
-
-Beispiele:
-
-- 12.05.1882
-- ca. 1882
-- vor 1882
-- nach 1882
-- zwischen 1882 und 1885
-
-Datumsangaben werden deshalb zunächst als genealogischer Text gespeichert.
+This model provides high flexibility while remaining genealogically accurate.
 
 ---
 
-# Quellen
+## Genealogical Dates
 
-## Zweck
+Genealogical dates are often uncertain.
 
-Quellen belegen genealogische Aussagen.
+Examples:
 
-Quellen sind optional.
+- 12 May 1882
+- About 1882
+- Before 1882
+- After 1882
+- Between 1882 and 1885
 
-Informationen dürfen auch ohne Quellen gespeichert werden.
-
----
-
-## Beispiele
-
-- Kirchenbuch
-- Standesamtsregister
-- Sterberegister
-- Familienbuch
-- Archivquelle
-- Zeitungsartikel
+Version 1 stores dates as genealogy-specific text representations.
 
 ---
 
-## Quellenmodell V1
+# Sources
 
-Version 1 verwendet bewusst ein einfaches Quellenmodell.
+## Purpose
 
-Attribute:
+Sources provide evidence for genealogy information.
 
-- Titel
-- Archiv / Repository
-- Referenz
-- Beschreibung
+Sources are optional.
 
----
-
-## Erweiterbarkeit
-
-Spätere Versionen können ein erweitertes Zitationsmodell einführen.
-
-Beispiel:
-
-Quelle:
-
-- Kirchenbuch Liegnitz
-
-Zitat:
-
-- Eintrag Nr. 49/1925
+Information may be entered before supporting evidence is available.
 
 ---
 
-# Medien
+## Examples
 
-## Grundsatz
-
-Binärdaten werden nicht in SQLite gespeichert.
-
-Dateien werden auf dem Dateisystem abgelegt.
-
-Die Datenbank speichert ausschließlich Metadaten.
+- Church records
+- Civil records
+- Census records
+- Family books
+- Archive material
+- Newspapers
 
 ---
 
-## Unterstützte Medien
+## Version 1 Source Model
 
-Beispiele:
+The initial source model intentionally remains simple.
+
+Attributes may include:
+
+- Title
+- Repository
+- Reference
+- Description
+
+---
+
+## Future Extension
+
+Future versions may introduce a more advanced citation model.
+
+Example:
+
+```text
+Source:
+    Church Book of Springfield
+
+Citation:
+    Entry 49 / 1925
+```
+
+---
+
+# Media
+
+## General Principle
+
+Binary files are not stored inside SQLite.
+
+Files are stored on the file system.
+
+The database stores metadata only.
+
+---
+
+## Examples
 
 - PDF
 - JPG
@@ -479,117 +710,107 @@ Beispiele:
 
 ---
 
-## Dateistruktur
+## Metadata
 
-```text
-projekt/
-├── ahnen.db
-└── media/
-    ├── 000001.jpg
-    ├── 000002.pdf
-    └── 000003.tif
-```
+Media metadata may include:
 
----
-
-## Metadaten
-
-Gespeichert werden:
-
-- Dateiname
-- relativer Pfad
-- MIME-Type
-- Prüfsumme
-- Beschreibung
+- Filename
+- Relative path
+- MIME type
+- Checksum
+- Description
+- File size
 
 ---
 
-## Verknüpfungen
+## Reuse
 
-Ein Medium kann mehreren Entitäten zugeordnet werden.
+A single media file may be linked to multiple entities.
 
-Beispiele:
-
-Geburtsurkunde:
+Examples:
 
 - Person
-- Geburtsevent
-- Quelle
+- Event
+- Source
 
-Das Medium wird physisch nur einmal gespeichert.
-
----
-
-# Notizen
-
-## Zweck
-
-Notizen speichern freie Informationen.
-
-Beispiele:
-
-- Familienüberlieferungen
-- Anmerkungen
-- Forschungshinweise
-- historische Besonderheiten
+The physical file exists only once.
 
 ---
 
-## Verknüpfung
+# Notes
 
-Notizen können mit beliebigen Entitäten verbunden werden.
+## Purpose
 
-Beispiele:
+Notes store free-form information.
 
-- Person
-- Familie
-- Ereignis
-- Quelle
-- Medium
-- Ort
+Examples:
 
----
-
-# Duplikatvermeidung
-
-Die Vermeidung doppelter Personen besitzt höchste Priorität.
-
-Vor jeder Neuanlage sollen geprüft werden:
-
-- Kekulé-Nummer
-- Name
-- bekannte Lebensdaten
-- bestehende Familienbeziehungen
-
-Die Anwendung soll mögliche Treffer anzeigen.
-
-Die endgültige Entscheidung trifft der Benutzer.
+- Family stories
+- Research comments
+- Investigation notes
+- Historical observations
 
 ---
 
-# GEDCOM-Kompatibilität
+## Linking
 
-Das Modell orientiert sich an den Grundprinzipien von GEDCOM.
+Notes may be linked to:
 
-Ziele:
-
-- späterer GEDCOM-Import
-- späterer GEDCOM-Export
-- Datenaustausch mit anderen Genealogieprogrammen
-
-Das interne Modell bleibt auf SQLite, Rust und eine moderne Desktop-Anwendung optimiert.
+- Persons
+- Families
+- Events
+- Places
+- Sources
+- Media
 
 ---
 
-# Nicht-Ziele von Version 1
+# Duplicate Prevention
 
-Nicht Bestandteil der ersten Version:
+Preventing duplicate persons is a high-priority objective.
 
-- automatische Personenzusammenführung
-- KI-gestützte Ahnenanalyse
-- Cloud-Synchronisation
-- Mehrbenutzerbetrieb
-- Online-Datenbanken
-- automatische GEDCOM-Synchronisation
+Potential matches should be evaluated using:
 
-Die Architektur soll zukünftige Erweiterungen jedoch ermöglichen.
+- Names
+- Known dates
+- Family relationships
+- Locations
+- Existing sources
+
+The application should assist users in identifying possible duplicates.
+
+The final decision remains with the user.
+
+---
+
+# GEDCOM Compatibility
+
+The domain model aligns with fundamental GEDCOM concepts.
+
+Goals include:
+
+- Future GEDCOM import
+- Future GEDCOM export
+- Data exchange with genealogy applications
+
+The internal model remains optimized for:
+
+- SQLite
+- Rust
+- Tauri
+- Modern desktop workflows
+
+---
+
+# Version 1 Non-Goals
+
+The following are intentionally out of scope for Version 1:
+
+- Automatic person merging
+- AI-assisted genealogy analysis
+- Cloud synchronization
+- Multi-user collaboration
+- Online genealogy databases
+- Automatic GEDCOM synchronization
+
+The architecture should remain flexible enough to support future expansion.
