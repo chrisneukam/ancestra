@@ -262,6 +262,8 @@ The project file references all resources required by the project.
 
 The project file is not part of the genealogy database.
 
+The project file is the boundary between project configuration and genealogy data.
+
 ---
 
 ## Responsibilities of the Project File
@@ -313,6 +315,9 @@ MyFamily/
   "preferredRootPersonId": 42
 }
 ```
+
+Database-generated integer IDs are internal implementation identifiers.
+Future versions may introduce stable public identifiers.
 
 ---
 
@@ -406,6 +411,21 @@ Generated views must never be stored in the genealogy database.
 
 ---
 
+# Genealogy Engine
+
+The Genealogy Engine transforms genealogy facts
+into genealogy views.
+
+Responsibilities include:
+
+- Graph traversal
+- Ancestor discovery
+- Descendant discovery
+- Relationship calculation
+- Dynamic Kekulé numbering
+
+---
+
 # Core Entities
 
 ## Person
@@ -424,6 +444,12 @@ Examples:
 - Sex
 - Research status
 - Audit information
+
+Supported values for sex:
+
+- MALE
+- FEMALE
+- UNKNOWN
 
 ### Relationships
 
@@ -472,16 +498,15 @@ The user interface normally displays the preferred name.
 
 ## Family
 
-A family represents a family unit.
+A Family represents a parent-child relationship context.
 
-A family may describe:
+A Family may contain:
 
-- Parent-child relationships
-- Partnerships
-- Shared children
-- Shared family events
+- zero or more parents
+- zero or more partners
+- zero or more children
 
-Marriage is not required.
+The Family entity exists to model genealogy relationships and does not necessarily correspond to a legal or social family structure.
 
 ---
 
@@ -498,6 +523,13 @@ Examples of roles:
 - UNKNOWN
 
 The model intentionally supports incomplete information.
+
+Future versions may support relationship-specific parent roles such as:
+
+- Biological Parent
+- Adoptive Parent
+- Foster Parent
+- Guardian
 
 ---
 
@@ -698,6 +730,10 @@ Binary files are not stored inside SQLite.
 Files are stored on the file system.
 
 The database stores metadata only.
+
+The database must store relative media paths only.
+
+Absolute paths are not allowed.
 
 ---
 

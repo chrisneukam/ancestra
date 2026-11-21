@@ -32,7 +32,7 @@ Accepted
 
 Ancestra uses SQLite as its primary persistence technology.
 
-The genealogy database is stored locally as a single SQLite database file.
+The genealogy database is currently implemented as a single SQLite database file that is managed by an Ancestra project.
 
 ---
 
@@ -217,6 +217,10 @@ The project file becomes responsible for:
 - Export locations
 - Preferred root person
 - Future project-specific configuration
+
+The project file is considered the authoritative project boundary.
+
+All project-specific state must be stored in the project file and never in the genealogy database.
 
 ---
 
@@ -453,6 +457,19 @@ Stored in SQLite.
 
 ---
 
+### Generated Views
+
+Examples:
+
+- Ancestor Trees
+- Descendant Trees
+- Family Cards
+- Kekulé Numbering
+
+Generated views are produced by the genealogy engine and are never persisted.
+
+---
+
 # ADR-009
 
 # Family Relationship Model
@@ -559,6 +576,58 @@ Supported examples include:
 - Military Service
 
 Future event types can be added without database schema changes.
+
+---
+
+# ADR-011
+
+# Internal Database Identifiers
+
+## Status
+
+Accepted
+
+## Decision
+
+Version 1 uses database-generated integer primary keys
+as internal entity identifiers.
+
+Examples:
+
+- person.id
+- family.id
+- event.id
+- source.id
+
+These identifiers are implementation details and are not
+intended to provide long-term public identity.
+
+## Rationale
+
+Version 1 focuses on a single-project architecture.
+
+Database-generated integer identifiers provide:
+
+- Simplicity
+- Excellent performance
+- Small storage footprint
+- Easy implementation
+
+The complexity of stable public identifiers is not
+justified for Version 1.
+
+## Consequences
+
+Future features may introduce stable public identifiers
+for scenarios such as:
+
+- GEDCOM interoperability
+- Project merging
+- Synchronization
+- Cross-project references
+
+The introduction of public identifiers remains outside
+the scope of Version 1.
 
 ---
 

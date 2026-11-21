@@ -49,9 +49,16 @@ CREATE TABLE person (
     preferred_surname   TEXT,
     preferred_given     TEXT,
 
-    sex                 TEXT,
+    sex TEXT
+        CHECK (
+            sex IN (
+                'MALE',
+                'FEMALE',
+                'UNKNOWN'
+            )
+        ),
 
-    research_status     TEXT NOT NULL DEFAULT 'UNVERIFIED'
+    research_status TEXT NOT NULL DEFAULT 'UNVERIFIED'
         CHECK (
             research_status IN (
                 'CONFIRMED',
@@ -88,7 +95,8 @@ CREATE TABLE person_name (
     surname             TEXT,
     given_names         TEXT,
 
-    is_preferred        INTEGER NOT NULL DEFAULT 0,
+    is_preferred INTEGER NOT NULL DEFAULT 0
+        CHECK (is_preferred IN (0, 1)),
 
     FOREIGN KEY(person_id)
         REFERENCES person(id)
@@ -97,6 +105,10 @@ CREATE TABLE person_name (
 
 CREATE INDEX idx_person_name_person
 ON person_name(person_id);
+
+CREATE UNIQUE INDEX idx_person_name_preferred
+ON person_name(person_id)
+WHERE is_preferred = 1;
 
 --------------------------------------------------------------------
 -- FAMILY
@@ -137,7 +149,16 @@ CREATE TABLE family_member (
     family_id           INTEGER NOT NULL,
     person_id           INTEGER NOT NULL,
 
-    role                TEXT NOT NULL,
+    role TEXT NOT NULL
+        CHECK (
+            role IN (
+                'FATHER',
+                'MOTHER',
+                'PARENT',
+                'PARTNER',
+                'UNKNOWN'
+            )
+        ),
 
     FOREIGN KEY(family_id)
         REFERENCES family(id)
