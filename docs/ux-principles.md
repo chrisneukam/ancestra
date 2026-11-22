@@ -319,6 +319,62 @@ This separation reduces cognitive load and creates a consistent editing experien
 
 ---
 
+## Single Focus Principle
+
+Ancestra maintains exactly one active focus at a time.
+
+The active workspace tab owns the current focus.
+
+All surrounding UI elements react to this focus.
+
+This prevents conflicting contexts and ensures predictable navigation behavior.
+
+### Focus Ownership
+
+Workspace owns focus.
+
+Navigator reflects focus.
+
+Inspector reflects focus.
+
+### Implications
+
+Selecting an object in the navigator changes the active workspace.
+
+Switching workspace tabs updates both navigator and inspector.
+
+The navigator never maintains an independent selection state.
+
+The inspector never maintains an independent selection state.
+
+There is always a single source of truth for the current context.
+
+---
+
+## Exploration Before Commitment
+
+Genealogical research is exploratory by nature.
+
+Users frequently move between persons, families, sources, places, and media while investigating relationships and evidence.
+
+Navigation should therefore remain lightweight.
+
+Editing represents commitment.
+
+### Principle
+
+Navigation opens temporary workspace tabs.
+
+Editing creates persistent workspace tabs.
+
+### Goal
+
+Users can freely explore the genealogy graph without creating excessive numbers of open tabs.
+
+Research remains fluid while preserving important work.
+
+---
+
 ## Graph Complexity Must Remain Invisible
 
 The genealogy graph is a technical foundation.
