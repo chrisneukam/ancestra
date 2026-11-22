@@ -153,6 +153,53 @@ Exceptions are allowed when workflows would otherwise become significantly more 
 
 ---
 
+## Always Ready For Input
+
+Frequently used data-entry areas should remain permanently ready for additional input.
+
+Users should not be forced to repeatedly activate creation commands before entering information.
+
+Examples:
+
+Children
+
+Anna Schmidt
+Karl Schmidt
+
+[ ]
+
+Alternative Names
+
+Anna Müller
+
+[ ]
+
+Sources
+
+Church Record 1925
+
+[ ]
+
+Whenever an entry is completed, Ancestra should automatically provide the next empty input area.
+
+This principle minimizes unnecessary clicks and supports continuous research workflows.
+
+The interface should encourage data entry rather than requiring users to repeatedly request permission to enter more information.
+
+This principle is especially important for:
+
+- Children
+- Parents
+- Events
+- Sources
+- Notes
+- Media
+- Alternative Names
+
+The application should remain ready for the next piece of information at all times.
+
+---
+
 ## Minimize Context Switching
 
 The application should minimize:
