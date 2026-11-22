@@ -2,14 +2,16 @@
 
 ## Goal
 
-Add a parent to an existing family.
+Add one or more parents to a partner within an existing family.
 
 The workflow must support both:
 
 - Linking an existing person
 - Creating a new person
 
-without interrupting ongoing research.
+without interrupting research activities.
+
+Parent information extends the genealogy graph into the previous generation.
 
 ---
 
@@ -17,20 +19,39 @@ without interrupting ongoing research.
 
 A Family Card is open.
 
-The user is working within the Parents section.
+The family contains at least one partner.
+
+Example:
+
+August Gansler
+♥
+Ernestine Dührig
+
+The user wants to record the parents of one of the partners.
 
 ---
 
 ## Family Card Behavior
 
-The Parents section always provides available input areas for parent entry.
+Parent information is displayed within the visual context of the corresponding partner.
 
 Example:
 
-Parents
+August Gansler
+♥
+Ernestine Dührig
+
+Parents of August
 
 [ ]
 [ ]
+
+Parents of Ernestine
+
+[ ]
+[ ]
+
+Parent fields remain directly available for editing.
 
 No explicit "Add Parent" command is required.
 
@@ -38,11 +59,11 @@ No explicit "Add Parent" command is required.
 
 ## User Flow
 
-1. The user starts typing into an available parent field.
+1. The user starts typing into one of the available parent fields.
 
 Example:
 
-[ August Gansler ]
+[ Johann Gansler ]
 
 2. While typing, Ancestra searches for possible existing persons.
 
@@ -52,8 +73,8 @@ Example:
 
 Possible Matches
 
-- August Gansler (\*1870)
-- August Gansler (\*1874)
+- Johann Gansler (\*1840)
+- Johann Gansler (\*1844)
 
 3. Existing persons are never selected automatically.
 
@@ -63,7 +84,7 @@ Possible Matches
 
 The user explicitly selects a suggested person.
 
-The existing person is linked to the family.
+The person becomes a parent of the associated partner.
 
 ### Create New Person
 
@@ -71,62 +92,65 @@ The user confirms the entered text without selecting a suggestion.
 
 A new person is created.
 
-The new person is automatically linked to the family.
+The person becomes a parent of the associated partner.
 
-5. The parent immediately appears within the Parents section.
+5. The parent appears immediately within the Family Card.
 
 Example:
 
-Parents
+Parents of August
 
-August Gansler
+Johann Gansler
 [ ]
 
 6. Potential duplicate warnings may be displayed.
 
 Example:
 
-August Gansler ⚠
+Johann Gansler ⚠
 
-Duplicate warnings must never interrupt data entry.
+Duplicate warnings must never interrupt editing.
 
 ---
 
 ## Result
 
-The family now contains an additional parent.
+The genealogy graph is extended by one additional generation.
 
-The genealogy graph is updated.
+The partner now has a parent relationship.
 
-The current Family Card remains active.
+The Family Card remains active.
 
-The user may continue entering information without changing views.
+The user may continue entering information immediately.
 
 ---
 
 ## Genealogical Considerations
 
-Research often begins with incomplete parental information.
+Genealogical research frequently contains incomplete information.
 
 The workflow must support:
 
 - One known parent
 - Two known parents
 - Unknown parents
-- Parents discovered later during research
+- Parents discovered later
+- Uncertain parent information
 
-No complete parental structure is required.
+The workflow must not require a complete parental structure.
+
+Research may continue with partial information.
 
 ---
 
 ## UX Goals
 
 - Immediate data entry
-- No modal dialog
+- No modal dialogs
+- No wizard screens
 - No context switching
 - Support incomplete genealogy information
-- Keyboard-oriented workflow
-- Consistent behavior with child entry
+- Consistent behavior across generations
 
 ---
 
@@ -134,7 +158,7 @@ No complete parental structure is required.
 
 ### Always Ready For Input
 
-Parent entry remains directly available.
+Parent fields remain directly available.
 
 ### Inline Editing First
 
@@ -142,15 +166,33 @@ Parents are entered directly within the Family Card.
 
 ### Facts First
 
-The user remains focused on genealogy information.
+Research information remains the primary focus.
 
 ### Minimize Context Switching
 
-The Family Card remains the active workspace.
+The user never leaves the current Family Card.
 
 ### Person And Family Perspectives
 
-Family-centered editing creates and maintains person-centered genealogy data.
+Family-centered editing extends person-centered genealogy data.
+
+### Navigation Supports Editing
+
+The workflow extends genealogy context without forcing navigation changes.
+
+---
+
+## Relationship To Family Card Layout
+
+The Family Card is organized around partners.
+
+Parents provide genealogy context for the partners.
+
+See:
+
+design-notes/family-card-layout.md
+
+Parent information must remain visually associated with the partner to whom the relationship belongs.
 
 ---
 
@@ -158,12 +200,13 @@ Family-centered editing creates and maintains person-centered genealogy data.
 
 Future versions may support:
 
-- Parent role definitions
-- Biological relationships
-- Adoptive relationships
-- Relationship validation
+- Biological parent relationships
+- Adoptive parent relationships
+- Foster parent relationships
+- Guardian relationships
+- Relationship confidence indicators
 
-These features must preserve the inline editing experience.
+These features must preserve the direct inline editing experience.
 
 ---
 
@@ -175,5 +218,6 @@ The workflow is successful when:
 - Existing persons can be linked directly.
 - New persons can be created directly.
 - Duplicate warnings never interrupt editing.
-- The user remains within the Family Card.
-- Parent entry behaves consistently with child entry.
+- The Family Card remains active.
+- Parent information remains visually connected to the associated partner.
+- Parent entry behaves consistently with partner and child entry workflows.
