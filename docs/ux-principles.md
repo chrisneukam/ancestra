@@ -279,6 +279,46 @@ Users should always understand why a workspace area is visible and what purpose 
 
 ---
 
+## The Inspector Provides Context
+
+The Inspector is a read-only contextual view.
+
+Its purpose is to provide understanding, orientation and navigation within the current research context.
+
+Primary editing must always occur within the active workspace view.
+
+The Inspector may display:
+
+- Metadata
+- Research Status
+- Duplicate Warnings
+- Relationship Information
+- Linked Objects
+- Summary Information
+
+The Inspector may provide navigation and action commands.
+
+Examples:
+
+- Open Person
+- Open Source
+- Open Media
+- Open Duplicate Candidate
+
+The Inspector must not become a secondary editing surface.
+
+Users should never be required to determine whether information must be edited in the workspace or in the inspector.
+
+The relationship is:
+
+Workspace = Edit
+
+Inspector = Inspect
+
+This separation reduces cognitive load and creates a consistent editing experience throughout the application.
+
+---
+
 ## Graph Complexity Must Remain Invisible
 
 The genealogy graph is a technical foundation.

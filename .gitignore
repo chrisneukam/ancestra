@@ -62,10 +62,10 @@ ahnen.db
 # Local Project Data
 # ----------------------------------------------------------
 
-data/
-media/
-exports/
-generated/
+./data/
+./media/
+./exports/
+./generated/
 
 # ----------------------------------------------------------
 # Environment Files
