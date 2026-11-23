@@ -10,17 +10,13 @@ It does not represent the internal database structure.
 
 It represents the genealogy context that researchers work with.
 
----
-
 ## Core Principle
 
 Partners form the center of a family.
 
 The Family Card should visually communicate this principle.
 
-The primary purpose of the card is to identify and edit a family context.
-
----
+The primary purpose of the card is to support genealogy research within a family context.
 
 ## Layout Principles
 
@@ -30,8 +26,6 @@ The primary purpose of the card is to identify and edit a family context.
 - Parents of the partners are displayed below the partners within the same visual context.
 - Children are displayed below the partners.
 - The Family Card represents a genealogy context, not a database structure.
-
----
 
 ## Research Perspective
 
@@ -44,33 +38,27 @@ Examples:
 
 Therefore, partner information should be immediately visible when a Family Card is opened.
 
----
-
 ## Relationship Structure
 
 The Family Card should reflect genealogy relationships naturally.
 
 Conceptually:
 
+```text
 Partners
 ↓
 Parents of the Partners
 ↓
 Children
 ↓
-Family Events
+Family Timeline
 ↓
-Sources
-↓
-Media
-↓
-Notes
+Research Assets
+```
 
 The exact visual representation may evolve over time.
 
 These relationships should remain recognizable.
-
----
 
 ## Architectural Alignment
 
@@ -84,8 +72,6 @@ The implementation remains based on the genealogy graph.
 
 The genealogy graph itself should remain invisible to the user whenever possible.
 
----
-
 ## Future Considerations
 
 Future versions may introduce:
@@ -93,7 +79,7 @@ Future versions may introduce:
 - Additional partner roles
 - More than two partners
 - Extended relationship visualization
-- Family timeline integration
+- Advanced timeline visualization
 - Advanced genealogy visualizations
 
 These features should preserve the central role of the partner area.
