@@ -71,11 +71,11 @@ If the person is already open:
 Examples:
 
 - Names
-- Events
+- Personal Facts
+- Life Events
 - Sources
 - Media
 - Notes
-- Relationships
 
 5. The user may immediately edit information.
 
@@ -88,6 +88,25 @@ No edit mode must be activated.
 Example:
 
 [ ● Ernst Gansler ]
+
+---
+
+### Tab Behavior
+
+Persons opened through navigation are initially opened as Preview Tabs.
+
+If the person is already open in a Persistent Tab:
+
+- The existing tab receives focus.
+- No duplicate tab is created.
+
+Preview Tabs become Persistent Tabs when:
+
+- the user explicitly activates the tab
+- the user starts editing
+- the user pins the tab
+
+This supports rapid genealogy graph exploration while preventing excessive numbers of open tabs.
 
 ---
 

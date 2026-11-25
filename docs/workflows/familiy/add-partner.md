@@ -185,7 +185,7 @@ design-notes/family-card-layout.md
 
 The partner area defines the family context.
 
-Children, events, sources, media and notes are organized around this central relationship.
+Children, family history and research assets are organized around this central relationship.
 
 ---
 

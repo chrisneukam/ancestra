@@ -123,6 +123,12 @@ The Family Card remains active.
 
 The user may continue entering information immediately.
 
+The Explorer updates automatically to reflect the modified genealogy graph.
+
+The newly linked parent becomes available as a navigation target.
+
+Users may continue working within the current Family Card or navigate to the newly connected generation.
+
 ---
 
 ## Genealogical Considerations
@@ -178,7 +184,11 @@ Family-centered editing extends person-centered genealogy data.
 
 ### Navigation Supports Editing
 
-The workflow extends genealogy context without forcing navigation changes.
+The workflow extends the genealogy graph without interrupting the current editing context.
+
+Newly connected persons become available immediately through Explorer-based graph navigation.
+
+Users may continue editing within the current Family Card or traverse to related genealogy objects at any time.
 
 ---
 
@@ -186,7 +196,7 @@ The workflow extends genealogy context without forcing navigation changes.
 
 The Family Card is organized around partners.
 
-Parents provide genealogy context for the partners.
+Parents extend the genealogy graph into previous generations and provide historical context for the family.
 
 See:
 

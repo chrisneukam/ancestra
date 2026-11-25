@@ -56,7 +56,7 @@ Future versions may support:
    - Media References
    - Application Workspace State
 
-3. Ancestra opens the Project Workspace.
+3. Ancestra opens the Workspace Layout.
 
 4. The workspace is displayed immediately.
 
@@ -70,9 +70,9 @@ No family is automatically selected.
 
 ---
 
-## Project Workspace
+## Workspace Layout
 
-The Project Workspace consists of:
+The Workspace Layout consists of:
 
 ### Menu Bar
 
@@ -91,14 +91,15 @@ Examples:
 
 Displayed on the left side.
 
-Provides access to:
+Provides access through Navigator Tools.
 
-- Persons
-- Families
-- Sources
-- Places
-- Media
-- Research Navigation
+Examples:
+
+- Explorer
+- Search
+- Duplicate Review
+
+Additional tools may be added in future versions.
 
 The Navigator is visible but does not automatically select an object.
 
@@ -269,7 +270,7 @@ Project Open
 The workflow is successful when:
 
 - A project can be opened with minimal effort.
-- The Project Workspace appears immediately.
+- The Workspace Layout appears immediately.
 - The user understands where to begin.
 - No genealogy object is opened unexpectedly.
 - All workspace areas provide meaningful context.

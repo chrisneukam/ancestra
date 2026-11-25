@@ -83,6 +83,10 @@ The new person is automatically linked to the family.
 
 5. The newly linked child immediately appears within the Children section.
 
+The Explorer updates automatically to reflect the modified genealogy graph.
+
+Any navigation targets related to the newly linked child become immediately available.
+
 Example:
 
 Children

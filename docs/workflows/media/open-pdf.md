@@ -53,6 +53,21 @@ Examples:
 
 ---
 
+### Tab Behavior
+
+PDF documents opened through navigation are initially opened as Preview Tabs.
+
+Only one Preview Tab may exist at a time.
+
+Preview Tabs become Persistent Tabs when:
+
+- the user explicitly activates the tab
+- the user pins the tab
+
+This supports efficient source inspection during genealogy research.
+
+---
+
 ## Result
 
 The PDF is displayed within the workspace.

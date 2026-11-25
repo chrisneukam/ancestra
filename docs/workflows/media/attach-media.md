@@ -23,10 +23,10 @@ The user is currently editing a genealogy entity.
 
 Examples:
 
-- Person View
+- Person Card
 - Family Card
-- Event View
-- Source View
+- Event Card
+- Source Card
 
 The edited entity is visible within the active workspace tab.
 
@@ -40,16 +40,16 @@ The editing view determines the target entity.
 
 Examples:
 
-Person View
+Person Card
 → media belongs to the person
 
 Family Card
 → media belongs to the family
 
-Event View
+Event Card
 → media belongs to the event
 
-Source View
+Source Card
 → media belongs to the source
 
 The Inspector never edits media.
@@ -139,7 +139,7 @@ Examples:
 
 Media attached within the Family Card belongs to the Family entity itself.
 
-Media belonging to a specific person must be managed through that person's dedicated Person View.
+Media belonging to a specific person must be managed through that person's dedicated Person Card.
 
 The Family Card should not contain separate media editors for every displayed person.
 

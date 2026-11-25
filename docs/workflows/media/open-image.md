@@ -56,6 +56,19 @@ Examples:
 
 ---
 
+### Tab Behavior
+
+Images opened through navigation are initially opened as Preview Tabs.
+
+Preview Tabs become Persistent Tabs when:
+
+- the user explicitly activates the tab
+- the user pins the tab
+
+This allows rapid inspection of research material while keeping the workspace organized.
+
+---
+
 ## Result
 
 The image is visible within the workspace.

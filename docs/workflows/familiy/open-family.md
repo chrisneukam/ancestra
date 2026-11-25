@@ -56,7 +56,7 @@ If the family is already open:
 - The existing tab receives focus.
 - No duplicate tab is created.
 
-3. The Family Card becomes the active view.
+3. The Family Card becomes the active workspace object.
 
 4. Existing genealogy information is displayed.
 
@@ -80,6 +80,25 @@ No edit mode must be activated.
 Example:
 
 [ ● Family Gansler ]
+
+---
+
+### Tab Behavior
+
+Families opened through navigation are initially opened as Preview Tabs.
+
+If the family is already open in a Persistent Tab:
+
+- The existing tab receives focus.
+- No duplicate tab is created.
+
+Preview Tabs become Persistent Tabs when:
+
+- the user explicitly activates the tab
+- the user starts editing
+- the user pins the tab
+
+This supports rapid genealogy graph exploration while preventing excessive numbers of open tabs.
 
 ---
 

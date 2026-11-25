@@ -54,7 +54,7 @@ Persons
 Future workflows may allow person creation from:
 
 - Family Card
-- Relationship Editor
+- Explorer
 - Search Results
 - Duplicate Resolution Views
 
@@ -70,19 +70,16 @@ Example:
 
 [ New Person ]
 
-3. The Person View becomes the active workspace view.
+3. The Person Card becomes the active workspace view.
 
-4. The Person View is initially empty.
+4. The Person Card is initially empty.
 
-Examples:
+Example:
 
-- Given Name
-- Surname
-- Sex
-- Events
-- Sources
-- Media
-- Notes
+- Names
+- Personal Facts
+- Life Events
+- Research Assets
 
 5. The cursor is automatically placed into the first editable field.
 
@@ -94,7 +91,7 @@ No modal dialog is shown.
 
 No edit mode must be activated.
 
-All editing occurs directly within the Person View.
+All editing occurs directly within the Person Card.
 
 7. The tab indicates unsaved changes.
 
@@ -158,15 +155,23 @@ Known genealogy context should be added whenever available.
 
 ### Create Equals Open Empty
 
-Creating a person immediately opens an empty Person View.
+Creating a person immediately opens an empty Person Card.
 
 ### Inline Editing First
 
-All editing occurs directly within the Person View.
+All editing occurs directly within the Person Card.
 
 ### Facts First
 
 Users immediately work with genealogy information.
+
+#### Person = Identity
+
+The Person Card focuses on information that belongs directly to the person.
+
+Relationship navigation is provided by the Explorer.
+
+Research context is primarily provided by Family Cards.
 
 ### Minimize Context Switching
 
@@ -181,4 +186,4 @@ The workflow is successful when:
 - A person can be created within seconds.
 - No separate creation screen exists.
 - The user immediately starts entering data.
-- The same Person View is used for creation and editing.
+- The same Person Card is used for creation and editing.

@@ -54,7 +54,7 @@ Families
 Future workflows may allow family creation from:
 
 - Person View
-- Relationship Editor
+- Explorer
 - Search Results
 - Duplicate Resolution Views
 
@@ -70,24 +70,23 @@ Example:
 
 [ New Family ]
 
-3. The Family Card becomes the active view.
+3. The Family Card becomes the active workspace object.
 
 4. The Family Card is initially empty.
 
 Example:
 
-Parents
+Partners
 
-[ Add Person ]
-[ Add Person ]
+[ ][ ]
 
 Children
 
-[ Add Child ]
+[ ]
 
-Events
+Family Timeline
 
-Notes
+Research Assets
 
 5. The user begins entering available genealogy information.
 
@@ -167,7 +166,11 @@ Users work within a genealogy workspace rather than managing records.
 
 ### Person And Family Perspectives
 
-The workflow supports family-first research without limiting future person-based workflows.
+The workflow supports family-centered research while preserving person-owned genealogy data.
+
+Families provide research context.
+
+Persons remain the authoritative source of person-specific information.
 
 ---
 
