@@ -1,6 +1,6 @@
-## Workflow: Navigate Genealogy Graph
+# Workflow: Navigate Genealogy Graph
 
-### Goal
+## Goal
 
 Navigate efficiently through the genealogy graph without losing research context.
 
@@ -16,7 +16,36 @@ Navigation is a core genealogy research activity.
 
 ---
 
-### Starting Point
+## Research Philosophy
+
+Genealogy research frequently involves following relationship chains through the genealogy graph.
+
+Examples:
+
+```text
+Person
+ → Family
+ → Child
+ → Family
+ → Parent
+```
+
+or
+
+```text
+Person
+ → Partner
+ → Family
+ → Child
+```
+
+The navigation model is designed to support this exploratory research behavior.
+
+Users should be able to move naturally through genealogy relationships without losing their current research context.
+
+---
+
+## Starting Point
 
 A genealogy project is open.
 
@@ -31,7 +60,7 @@ The Explorer displays graph navigation targets related to the active workspace o
 
 ---
 
-### Core Principle
+## Core Principle
 
 The active workspace object owns focus.
 
@@ -47,7 +76,7 @@ The Explorer always reflects the active workspace object.
 
 ---
 
-### Navigation Sources
+## Navigation Sources
 
 Navigation may originate from:
 
@@ -62,7 +91,7 @@ All navigation follows the same workspace model.
 
 ---
 
-### Explorer Behavior
+## Explorer Behavior
 
 The Explorer visualizes graph traversal opportunities around the active object.
 
@@ -96,7 +125,29 @@ The Explorer is a navigation tool rather than an editing surface.
 
 ---
 
-### User Flow
+## Graph Updates
+
+The Explorer reflects the current state of the genealogy graph.
+
+Whenever genealogy relationships change:
+
+- the Explorer updates automatically
+- newly connected objects become available as navigation targets
+- removed relationships disappear from navigation
+
+Examples:
+
+- Add Partner
+- Add Child
+- Add Parent
+
+Editing never forces navigation changes.
+
+The active workspace object remains unchanged until the user explicitly navigates elsewhere.
+
+---
+
+## User Flow
 
 The user selects a navigation target.
 
@@ -119,7 +170,7 @@ The newly activated object determines the current genealogy context.
 
 ---
 
-### Tab Behavior
+## Tab Behavior
 
 Navigation is exploratory by nature.
 
@@ -149,7 +200,7 @@ This prevents excessive numbers of open tabs during genealogy research.
 
 ---
 
-### Promoting Preview Tabs
+## Promoting Preview Tabs
 
 A Preview Tab becomes a Persistent Tab when:
 
@@ -171,7 +222,7 @@ Persistent Tabs remain open until explicitly closed.
 
 ---
 
-### Existing Open Objects
+## Existing Open Objects
 
 When a navigation target is already open in a Persistent Tab:
 
@@ -182,7 +233,7 @@ This preserves orientation and prevents duplicate workspace objects.
 
 ---
 
-### Person To Family Navigation
+## Person To Family Navigation
 
 Researchers frequently move from a person to a family context.
 
@@ -201,7 +252,7 @@ The Family Card becomes the active workspace object.
 
 ---
 
-### Family To Person Navigation
+## Family To Person Navigation
 
 Researchers frequently move from a family context to an individual person.
 
@@ -220,7 +271,7 @@ The Person Card becomes the active workspace object.
 
 ---
 
-### Cross-Generation Navigation
+## Cross-Generation Navigation
 
 The Explorer supports navigation across generations.
 
@@ -244,7 +295,7 @@ The workflow allows users to move naturally through the genealogy graph without 
 
 ---
 
-### Relationship To Research
+## Relationship To Research
 
 Genealogy research is inherently relational.
 
@@ -273,7 +324,7 @@ The navigation model should support this research behavior with minimal interact
 
 ---
 
-### UX Goals
+## UX Goals
 
 - Fast graph traversal
 - Preserve research context
@@ -285,37 +336,37 @@ The navigation model should support this research behavior with minimal interact
 
 ---
 
-### UX Principles Applied
+## UX Principles Applied
 
-#### Workspace Owns Focus
+### Workspace Owns Focus
 
 The active workspace object determines the active context.
 
-#### Navigation Supports Editing
+### Navigation Supports Editing
 
 Navigation exists to support ongoing research and editing activities.
 
-#### Consistent Entry And Return Points
+### Consistent Entry And Return Points
 
 Users can freely move through the graph while preserving previously opened workspace objects.
 
-#### Exploration Before Commitment
+### Exploration Before Commitment
 
 Navigation opens Preview Tabs.
 
 Editing creates Persistent Tabs.
 
-#### Family = Context
+### Family = Context
 
 Families provide the primary genealogy research context.
 
-#### Person = Identity
+### Person = Identity
 
 Persons remain the authoritative source of person-specific information.
 
 ---
 
-### Success Criteria
+## Success Criteria
 
 The workflow is successful when:
 
