@@ -84,6 +84,30 @@ Instead, it displays the immediate research context of the active object.
 
 ---
 
+## Graph Traversal Principle
+
+The Explorer is primarily a navigation tool.
+
+Its purpose is not to eliminate information duplication.
+
+Its purpose is to expose graph traversal opportunities around the active object.
+
+Users should be able to move efficiently through the genealogy graph without opening additional intermediate objects whenever possible.
+
+The Explorer therefore prioritizes navigation over information deduplication.
+
+Objects may appear in multiple sections if this improves navigation and graph traversal.
+
+Examples:
+
+- A partner may appear in the Partners section.
+- The same partner may also be reachable through a Family.
+- This is intentional and supports different navigation paths.
+
+The Explorer visualizes directly connected navigation targets around the active object.
+
+---
+
 ## Person Context
 
 When a Person Card is active, the Explorer displays relationships around that person.
@@ -93,17 +117,30 @@ Example:
 ```text
 Person: Anna Schmidt
 
+Families
+ ├─ Family: Johann Müller + Anna Schmidt
+ └─ Family: Peter Weber + Anna Schmidt
+
 Parents
  ├─ Karl Schmidt
  └─ Elisabeth Weber
 
 Partners
- └─ Johann Müller
+ ├─ Johann Müller
+ └─ Peter Weber
 
 Children
  ├─ Peter Müller
- └─ Maria Müller
+ └─ Sandra Weber
 ```
+
+Families provide direct access to genealogy research contexts.
+
+Parents and Children support traversal across generations.
+
+Partners support horizontal traversal between closely related persons.
+
+Together these sections provide efficient navigation through the genealogy graph.
 
 The displayed structure represents contextual relationships rather than a genealogy tree.
 
@@ -140,6 +177,19 @@ The Explorer provides fast access to connected objects.
 # Navigation Behavior
 
 Selecting an object in the Explorer changes the active workspace context.
+
+The Explorer supports multiple navigation paths through the genealogy graph.
+
+Depending on the active object, navigation targets may include:
+
+- Families
+- Parents
+- Partners
+- Children
+- Sources
+- Media
+
+The goal is to allow users to move naturally through genealogy relationships and research contexts.
 
 The navigator itself does not maintain navigation history.
 
