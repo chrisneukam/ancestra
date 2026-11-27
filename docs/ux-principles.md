@@ -129,6 +129,76 @@ The underlying graph structure must remain invisible to the user whenever possib
 
 ---
 
+# Research Perspectives
+
+## Identity, Context And Evidence
+
+Ancestra separates genealogy information into three distinct concepts.
+
+Person = Identity
+
+Family = Context
+
+Research Assets = Evidence
+
+### Identity
+
+Persons represent the identities that exist within the genealogy graph.
+
+Genealogy facts ultimately belong to persons.
+
+Examples:
+
+- Names
+- Birth Facts
+- Death Facts
+- Occupations
+- Relationships
+
+### Context
+
+Families provide research context.
+
+Researchers often investigate persons through family relationships.
+
+Family Cards therefore act as primary research workspaces.
+
+Examples:
+
+- Partnerships
+- Parents
+- Children
+- Household Context
+- Shared Research Activities
+
+### Evidence
+
+Research Assets represent evidence that supports genealogy facts.
+
+Evidence may belong to a person or a family depending on its genealogical meaning.
+
+Examples:
+
+Person Evidence
+
+- Birth Certificate
+- Death Certificate
+- Portrait Photograph
+- Military Record
+
+Family Evidence
+
+- Marriage Certificate
+- Family Photograph
+- Census Household Record
+- Divorce Record
+
+Ancestra does not force researchers into a single organizational model.
+
+Research Assets should be attached where researchers naturally expect them.
+
+---
+
 # Data Entry Principles
 
 ## Inline Editing First
@@ -392,6 +462,34 @@ The application should never require users to understand graph structures.
 
 ---
 
+## Navigator Represents The Genealogy Graph
+
+The Navigator exists to traverse genealogy relationships.
+
+Its purpose is to help researchers move through identities and contexts.
+
+The Navigator should primarily expose:
+
+- Persons
+- Families
+- Relationships
+
+The Navigator should not become a general-purpose data browser.
+
+Supporting research objects such as:
+
+- Sources
+- Media
+- Notes
+
+should remain accessible through their research context, search results or inspector views rather than through dedicated navigator hierarchies.
+
+Researchers navigate the graph.
+
+They do not navigate the database.
+
+---
+
 ## Local Context Navigation
 
 Users should be able to quickly navigate to directly related persons and families.
@@ -431,6 +529,33 @@ Examples:
 - Reports
 
 Side panels must never visually dominate the workspace.
+
+---
+
+## Primary And Supporting Objects
+
+Not every genealogy object is a workspace object.
+
+Ancestra distinguishes between primary workspace objects and supporting research objects.
+
+Primary Workspace Objects
+
+- Persons
+- Families
+
+Supporting Research Objects
+
+- Sources
+- Media
+- Notes
+
+Primary workspace objects own research focus.
+
+Supporting research objects provide evidence and context.
+
+Supporting objects should be edited within the workflow that uses them whenever possible.
+
+The application should avoid promoting supporting objects to first-class workspace entities unless a clear research benefit exists.
 
 ---
 

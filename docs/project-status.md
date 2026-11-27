@@ -28,6 +28,10 @@ UX Foundation Completed
 - family-card-layout.md
 - person-card-concept.md
 
+### Research Assets
+
+- research-assets-concept.md
+
 ### Navigation
 
 - navigate-genealogy-graph.md
@@ -52,6 +56,8 @@ UX Foundation Completed
 - open-image
 - open-pdf
 
+- add-research-evidence
+
 ## Established UX Principles
 
 - Workspace owns focus
@@ -69,17 +75,6 @@ UX Foundation Completed
 
 - Explorer = Graph Traversal
 - Search = Global Navigation
-
-## Next Planned Work Package
-
-Research Assets
-
-Topics:
-
-- research-assets-concept
-- source-card-concept
-- source-management
-- attach-source
 
 ## Future Work Packages
 
@@ -100,3 +95,19 @@ Topics:
 - persistence architecture
 - search architecture
 - vertical slices
+
+## Recently Completed
+
+### Research Assets
+
+- research-assets-concept.md
+- add-research-evidence.md
+
+## Next Planned Work Package
+
+Research Asset Integration
+
+Topics:
+
+- integrate research assets into family card
+- integrate research assets into person card
