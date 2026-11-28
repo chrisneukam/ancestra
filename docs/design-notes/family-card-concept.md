@@ -10,6 +10,26 @@ Most genealogy research activities naturally occur around families rather than i
 
 The Family Card therefore serves as the central research hub of the application.
 
+The Family Card is the primary research workspace of Ancestra.
+
+This does not change the underlying domain model.
+
+Persons remain the central identity entities of the genealogy graph.
+
+Families provide the context in which genealogy research is performed.
+
+---
+
+# Relationship To The Domain Model
+
+The Family Card is a workspace representation of a Family.
+
+It is not the Family entity itself.
+
+The Family entity belongs to the genealogy graph.
+
+The Family Card is a user interface projection of that entity and its related research context.
+
 ---
 
 # Core Principles

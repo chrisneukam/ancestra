@@ -6,7 +6,13 @@ Defines the state displayed by the Navigator.
 
 The Navigator derives all state from the active workspace focus.
 
-The Navigator never owns focus.
+The navigator never owns focus.
+
+The navigator reflects the focus of the active workspace tab.
+
+Changing workspace focus updates navigator state.
+
+Changing navigator selection requests a workspace focus change.
 
 ---
 

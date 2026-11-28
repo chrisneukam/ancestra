@@ -432,6 +432,10 @@ Responsibilities include:
 
 The Person entity is the central entity of the entire system.
 
+The Person entity represents identity within the genealogy graph.
+
+User experience concepts such as Family Context and Research Assets are defined separately.
+
 A person represents a real human being.
 
 ### Attributes
@@ -498,7 +502,11 @@ The user interface normally displays the preferred name.
 
 ## Family
 
-A Family represents a parent-child relationship context.
+A Family is a domain entity representing a parent-child relationship context.
+
+The Family entity forms part of the genealogy graph.
+
+User interface concepts such as Family Cards and Family Contexts are defined separately and are not domain entities.
 
 A Family may contain:
 
@@ -675,6 +683,10 @@ Version 1 stores dates as genealogy-specific text representations.
 
 Sources provide evidence for genealogy information.
 
+In the user experience, sources are presented as Research Assets.
+
+Research Asset is a UX abstraction and not a separate domain entity.
+
 Sources are optional.
 
 Information may be entered before supporting evidence is available.
@@ -731,6 +743,10 @@ Files are stored on the file system.
 
 The database stores metadata only.
 
+In the user experience, media can be presented as Research Assets.
+
+Research Asset is a UX abstraction and not a separate domain entity.
+
 The database must store relative media paths only.
 
 Absolute paths are not allowed.
@@ -778,6 +794,10 @@ The physical file exists only once.
 ## Purpose
 
 Notes store free-form information.
+
+In the user experience, notes can be presented as Research Assets.
+
+Research Asset is a UX abstraction and not a separate domain entity.
 
 Examples:
 

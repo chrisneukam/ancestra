@@ -90,3 +90,11 @@ Search State
 ← Workspace State
 
 Workspace is the single source of truth.
+
+# Focus Ownership
+
+The workspace state tracks the active workspace tab.
+
+The active tab defines the current focus object.
+
+Navigator state and inspector state derive their context from the active workspace tab and do not maintain independent focus ownership.

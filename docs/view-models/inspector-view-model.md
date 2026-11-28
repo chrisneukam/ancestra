@@ -47,3 +47,11 @@ Provide navigation shortcuts.
 Inspector never owns focus.
 
 Inspector is not a primary editing surface.
+
+---
+
+# Focus Relationship
+
+The InspectorViewModel does not define application focus.
+
+It derives its content from the focused workspace object provided by the active workspace tab.

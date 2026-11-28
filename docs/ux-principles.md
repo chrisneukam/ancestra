@@ -93,6 +93,14 @@ Ancestra must support both person-centered and family-centered research workflow
 
 The Person is the central business entity of the genealogy graph.
 
+Within the user experience, families provide the primary research context.
+
+This distinction is summarized as:
+
+Person = Identity
+
+Family = Context
+
 Every genealogical fact ultimately belongs to one or more persons.
 
 However, researchers often work within a family context.
@@ -138,6 +146,14 @@ Ancestra separates genealogy information into three distinct concepts.
 Person = Identity
 
 Family = Context
+
+The term Family Context describes the genealogy research scope in which users investigate relationships, events and evidence.
+
+The Family domain entity and the Family research context are closely related but not identical concepts.
+
+The Family entity belongs to the domain model.
+
+Family Context belongs to the user experience model.
 
 Research Assets = Evidence
 
@@ -401,11 +417,17 @@ This prevents conflicting contexts and ensures predictable navigation behavior.
 
 ### Focus Ownership
 
-Workspace owns focus.
+The active workspace tab owns focus.
 
 Navigator reflects focus.
 
 Inspector reflects focus.
+
+The workspace may contain multiple open tabs.
+
+Only one workspace tab can be active at a time.
+
+The active workspace tab is therefore the single source of truth for application focus.
 
 ### Implications
 
@@ -482,11 +504,19 @@ Supporting research objects such as:
 - Media
 - Notes
 
-should remain accessible through their research context, search results or inspector views rather than through dedicated navigator hierarchies.
+are evidence objects rather than navigation objects.
+
+They should remain accessible through family workflows, person workflows, search results and inspector views.
+
+The navigator must not expose dedicated source, media or note hierarchies.
 
 Researchers navigate the graph.
 
 They do not navigate the database.
+
+The navigator traverses genealogy relationships.
+
+Evidence is accessed through workflows, not through graph traversal.
 
 ---
 
@@ -556,6 +586,14 @@ Supporting research objects provide evidence and context.
 Supporting objects should be edited within the workflow that uses them whenever possible.
 
 The application should avoid promoting supporting objects to first-class workspace entities unless a clear research benefit exists.
+
+Research Assets are supporting objects.
+
+Sources, media and notes provide evidence for genealogy research but do not own research focus.
+
+Research focus always belongs to primary workspace objects such as persons and families.
+
+Supporting objects are accessed and managed within the context that uses them rather than through dedicated workspace hierarchies.
 
 ---
 

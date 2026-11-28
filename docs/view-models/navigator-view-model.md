@@ -49,3 +49,11 @@ Navigator never owns focus.
 Navigator never owns independent selection state.
 
 Workspace remains authoritative.
+
+---
+
+# Focus Relationship
+
+The NavigatorViewModel does not define application focus.
+
+It visualizes and interacts with the focus owned by the active workspace tab.

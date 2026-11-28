@@ -19,12 +19,16 @@ The active workspace tab defines the current context of the application.
 All surrounding user interface elements react to this context.
 
 ```text
-Workspace owns focus.
+The active workspace tab owns focus.
 Navigator reflects focus.
 Inspector reflects focus.
 ```
 
 The workspace is the single source of truth for the current user context.
+
+More precisely, the active workspace tab provides the current focus context.
+
+All surrounding user interface elements derive their state from the active tab.
 
 Neither navigator nor inspector maintain independent selection states.
 
@@ -107,9 +111,14 @@ Objects opened in the workspace may include:
 - Person Cards
 - Family Cards
 - Place Cards
-- Source Cards
-- Media Viewers
-- PDF Viewers
+- Generated Views
+- Research Views
+
+Research Assets are not primary workspace objects.
+
+Sources, media and notes are accessed through the research workflows of persons and families.
+
+Evidence is displayed and edited within its genealogical context rather than through dedicated Source or Media workspace editors.
 
 Future workspace object types may be added without changing the overall layout architecture.
 
@@ -184,8 +193,12 @@ Examples:
 
 - Person Cards
 - Family Cards
-- Sources
 - Places
+- Generated Views
+
+Research Assets do not create dedicated persistent tabs.
+
+Evidence remains part of the workflow in which it is used.
 
 Persistent tabs remain open until explicitly closed by the user.
 
@@ -239,9 +252,8 @@ For an active family:
 ```text
 Family
 ├─ Partners
-├─ Children
-├─ Sources
-└─ Media
+├─ Parents
+└─ Children
 ```
 
 The navigator therefore supports graph exploration rather than hierarchical tree navigation.

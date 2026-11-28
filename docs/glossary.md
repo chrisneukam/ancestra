@@ -45,39 +45,69 @@ Data belongs to persons.
 
 ## Family
 
-A Family represents a genealogy context connecting persons.
+A Family is a domain entity representing a genealogy relationship context.
 
-Family = Context
+A Family connects persons through partner and parent-child relationships.
 
-Examples:
+A Family is not a workspace view.
 
-- Parents and Children
+A Family is not a user interface component.
+
+The Family entity is part of the genealogy graph.
+
+---
+
+## Family Card
+
+A Family Card is a workspace view for a Family.
+
+The Family Card presents and edits the information associated with a Family.
+
+A Family Card is generated from genealogy data.
+
+A Family Card is not a domain entity.
+
+Multiple views could theoretically represent the same Family in different ways.
+
+---
+
+## Family Context
+
+Family Context describes the current genealogy research scope.
+
+A Family Context may include:
+
 - Partners
-- Households
+- Parents
+- Children
+- Events
+- Research Assets
 
-A Family does not replace persons.
+Family Context is a research concept.
 
-A Family provides the context in which genealogy research is often performed.
-
-Research happens in families.
+It is not a persisted domain entity.
 
 ---
 
 ## Research Asset
 
-A Research Asset represents evidence supporting genealogy research.
+A Research Asset is a UX concept representing evidence used in genealogy research.
+
+Research Asset is not a domain entity.
+
+A Research Asset may represent:
+
+- Source
+- Media
+- Note
+
+Research Assets support genealogy facts but do not own research focus.
+
+Person = Identity
+
+Family = Context
 
 Research Asset = Evidence
-
-Research Assets do not represent people or relationships.
-
-Research Assets support research.
-
-Examples:
-
-- Sources
-- Media
-- Notes
 
 ---
 
@@ -170,6 +200,18 @@ The Active Tab is the currently visible workspace tab.
 The Active Tab owns workspace focus.
 
 Changing the Active Tab changes the current research context.
+
+---
+
+## Active Workspace Tab
+
+The active workspace tab owns the current application focus.
+
+Only one workspace tab may be active at any time.
+
+Navigator and inspector derive their state from the active workspace tab.
+
+The active workspace tab is the single source of truth for focus-related behavior.
 
 ---
 
